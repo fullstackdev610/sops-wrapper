@@ -1,7 +1,6 @@
-
 <?php
 
-// namespace LinkORB\Shipyard;
+namespace LinkORB\Shipyard;
 
 class Sops
 {
@@ -29,6 +28,7 @@ class Sops
         if ($return) {
             throw new \RuntimeException($return);
         }
+        return TRUE;
     }
 
     public function decrypt($filePath)
@@ -50,7 +50,7 @@ class Sops
     private function genEncryptPath($srcPath)
     {
         $path_parts = pathinfo($srcPath);
-        return $path_parts['dirname'] . '/' . $path_parts['filename'] . $this->sopscmd . $path_parts['extension'];
+        return $path_parts['dirname'] . '/' . $path_parts['filename'] . '.' . $this->sopscmd . '.' . $path_parts['extension'];
     }
 
     private function genDecryptPath($srcPath)
@@ -68,10 +68,3 @@ class Sops
         return !empty($return);
     }
 }
-
-
-$sops = new Sops();
-$sops->encrypt("age1tjzcc45rq3rlnt0hd6a77w9p90pdzmq3df7pdgtkrhynyxs25y2qltryk0", "test.json");
-$sops->decrypt("test.sops.json");
-?>
-
